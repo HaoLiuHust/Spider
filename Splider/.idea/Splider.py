@@ -9,7 +9,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 import sys,os
 import re
 
-savepath=r"D:\Python\Splider\.idea\save"
+savepath=r".\save"
 
 def mkdir(path):
     if os.path.exists(path):
@@ -52,10 +52,13 @@ def getImgs(parms):
             continue
 
 if __name__ == "__main__":
-    urls = getUrls("https://mm.taobao.com/json/request_top_list.htm?page=1")
-    pool = ThreadPool(4)
-    pool.map(getImgs,urls.items())
-    pool.close()
-    pool.join()
-    # for (k,v) in urls.items():
-    #     getImgs((k,v))
+    mkdir(savepath)
+    pagenum = 10
+    for i in range(1,pagenum):
+        urls = getUrls("https://mm.taobao.com/json/request_top_list.htm"+"?page="+str(i))
+        pool = ThreadPool(4)
+        pool.map(getImgs,urls.items())
+        pool.close()
+        pool.join()
+		# for (k,v) in urls.items():
+		#     getImgs((k,v))
